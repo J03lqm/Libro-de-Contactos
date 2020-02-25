@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Joel Quenard Martínez
-# Muestra el último número del cupón de la once premiado
+# Libro de contactos
 # 28-01-2020
 # Últma revisión:
 
@@ -104,8 +104,8 @@ if [ "$1" == "-s" ];then
 resultadoBusqueda=$(cat ab.txt|tr " " ";"|cut -d ";" -f1|grep -i "$2")
     if [ "$resultadoBusqueda" != "" ];then
         echo -e "Nombre       - Numero  - email\n-----------------------------------------"
-         lineas=$( nl ab.txt | tr "\t" " " | tr -s " " | tr " " ";" | cut -d ";" -f 2,3 | grep $2 | cut -d ";" -f 1 | tr "\n" "," )
-        tamFich=$( echo -n $lineas|tr "," " " | wc -w )
+        lineas=$( nl ab.txt | tr "\t" " " | tr -s " " | tr " " ";" | cut -d ";" -f 2,3 | grep $2 | cut -d ";" -f 1 | tr "\n" "," )
+        tamFich=$( echo -n $lineas|tr "," " " | wc -w )#Numero de lineas a mostrar
         x=1
         echo -e "Nombre       - Numero  - email\n-----------------------------------------"
         while [ $x -le $tamFich ]; do
@@ -126,7 +126,7 @@ if [ "$1" == "-st" ];then
 resultadoBusqueda=$(cat ab.txt|tr " " ";"|cut -d ";" -f2|grep -i "$2")
     if [ "$resultadoBusqueda" != "" ];then
     lineas=$( nl ab.txt | tr "\t" " " | tr -s " " | tr " " ";" | cut -d ";" -f 2,4 | grep $2 | cut -d ";" -f 1 | tr "\n" "," )
-    tamFich=$( echo -n $lineas|tr "," " " | wc -w )
+    tamFich=$( echo -n $lineas|tr "," " " | wc -w )#Numero de lineas a mostrar
     x=1
     echo -e "Nombre       - Numero  - email\n-----------------------------------------"
     while [ $x -le $tamFich ]; do
@@ -148,10 +148,8 @@ if [ "$1" == "-se" ];then
 resultadoBusqueda=$(cat ab.txt|tr " " ";"|cut -d ";" -f3|grep -i "$2")
     if [ "$resultadoBusqueda" != "" ];then
         lineas=$( nl ab.txt | tr "\t" " " | tr -s " " | tr " " ";" | cut -d ";" -f 2,5 | grep $2 | cut -d ";" -f 1 | tr "\n" "," )
-        tamFich=$( echo -n $lineas|tr "," " " | wc -w )
+        tamFich=$( echo -n $lineas|tr "," " " | wc -w )#Numero de lineas a mostrar
         x=1
-        echo $tamFich
-        echo $lineas
         echo -e "Nombre       - Numero  - email\n-----------------------------------------"
         while [ $x -le $tamFich ]; do
             comVar=$( echo $lineas | cut -d ',' -f$x )
@@ -169,7 +167,7 @@ fi
 # $1 == -r Elimina las entradas de la agenda con los nombres que coincidan con el segundo parametro
 if [ "$1" == "-r" ];then
     lineaBorrar=$( nl ab.txt | tr "\t" " " | tr -s " " | tr " " ";" | cut -d ";" -f 2,3 | grep $2 | cut -d ";" -f 1 | tr "\n" "," )
-    tamBorrar=$( echo -n $lineaBorrar|tr "," " " | wc -w )
+    tamBorrar=$( echo -n $lineaBorrar|tr "," " " | wc -w )#Numero de lineas a borrar
 
     # Bonus 1 pedir confirmación
     echo "Se van a borrar las siguientes entradas:"
@@ -206,7 +204,6 @@ resultadoBusqueda=$(nl ab.txt| tr "\t" " " | tr -s " "|cut -d " " -f2|grep -i "$
         tamFich=$( cat ab.txt |wc -l )
         tmpSup=$(mktemp /tmp/archivoTmp1.XXXXX)
         head -n $(($2-1)) ab.txt > $tmpSup
-        cat $tmpSup
         tmpInf=$(mktemp /tmp/archivoTmp2.XXXXX)
         tail -n $(($tamFich-$2+1)) ab.txt > $tmpInf
         echo "Se va a editar la siguiente entrada:"
